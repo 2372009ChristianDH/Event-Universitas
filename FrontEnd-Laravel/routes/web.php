@@ -1,16 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/', function () {
     return view('index');
 });
-Route::get('/login', function () {
-    return view('login');
-});
-Route::get('/register', function () {
-    return view('register');
-});
+
+// Route login
+Route::get('/login', [LoginController::class, 'index'])->name('login.index');
+
+Route::post('/login', [LoginController::class, 'store'])->name('login.submit');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 
 // Route Peserta
 Route::get('/peserta/index', function () {
@@ -36,6 +38,9 @@ Route::get('/peserta/eventSertifikat', function () {
 // Route panitia
 Route::get('/panitia/index', function () {
     return view('panitia.index');
+});
+Route::get('/panitia/event', function () {
+    return view('panitia.event');
 });
 Route::get('/panitia/create', function () {
     return view('panitia.create');

@@ -31,11 +31,6 @@
 
             <!-- Dashboard Content -->
             <div class="dashboard-content">
-                <div class="dashboard-welcome">
-                    <h2>Welcome back, Emma!</h2>
-                    <p>Here's what's happening with your events</p>
-                </div>
-
                 <div class="dashboard-stats">
                     <div class="stat-card">
                         <div class="stat-icon">

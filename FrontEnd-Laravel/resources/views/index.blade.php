@@ -26,8 +26,8 @@
                         </ul>
                     </nav>
                     <div class="auth-actions">
-                        <a href="login.html" class="btn btn-outline">Log In</a>
-                        <a href="register.html" class="btn btn-primary">Sign Up</a>
+                        <a href= {{ route('login.index') }} class="btn btn-outline">Log In</a>
+                        <a href={{ route('register.index') }} class="btn btn-outline">Sign Up</a>
                     </div>
                     <button class="mobile-menu-toggle">
                         <i class="fas fa-bars"></i>
