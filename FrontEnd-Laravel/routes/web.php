@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\PanitiaController;
 
 Route::get('/', function () {
     return view('index');
@@ -13,6 +16,10 @@ Route::get('/login', [LoginController::class, 'index'])->name('login.index');
 Route::post('/login', [LoginController::class, 'store'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+
+// Route register
+Route::get('/register', [RegisterController::class, 'index'])->name('register.index');
+Route::post('/register', [RegisterController::class, 'store'])->name('register.submit');
 
 // Route Peserta
 Route::get('/peserta/index', function () {
@@ -42,12 +49,10 @@ Route::get('/panitia/index', function () {
 Route::get('/panitia/event', function () {
     return view('panitia.event');
 });
-Route::get('/panitia/create', function () {
-    return view('panitia.create');
-});
 Route::get('/panitia/absensi', function () {
     return view('panitia.absensi');
 });
+Route::get('panitia/create',[PanitiaController::class, 'createEvent'])->name('panitia.createEvent');
 
 // Route keuangan
 Route::get('/keuangan/index', function () {
@@ -60,4 +65,12 @@ Route::get('/admin/index', function () {
 });
 Route::get('/admin/create', function () {
     return view('admin.create');
+});
+Route::get('/admin/user/index', [AdminController::class, 'index'])->name('admin.user.index'); 
+Route::get('/admin/user/create', [AdminController::class, 'create'])->name('admin.user.create');
+
+
+
+Route::get('/setting', function () {
+    return view('setting');
 });

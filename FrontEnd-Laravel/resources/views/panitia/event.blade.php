@@ -60,8 +60,8 @@
                             </div>
                         </div>
                         <div class="create-event-button" style="margin-top: 20px;">
-                            <a href="committee-create-event.html" class="btn btn-primary">
-                                <i class="fas fa-plus"></i> Create New Event
+                            <a href={{ route('panitia.createEvent') }} class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Buat Event Baru
                             </a>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
             </section>
 
                         <!-- Events List -->
-            {{-- <section class="events-list">
+            <section class="events-list">
                 <div class="container">
                     <div class="event-grid">
                         <!-- Event Card 1 -->
@@ -104,7 +104,7 @@
                             </div>
                         </div>
                 </div>
-            </section> --}}
+            </section>
             @include('layouts.footer')
         </main>
     </div>

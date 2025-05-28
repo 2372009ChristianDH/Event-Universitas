@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - UniEvents</title>
+    <title>Register - UniEvents</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@500;600;700&display=swap">
@@ -22,8 +22,8 @@
                         <span>UniEvents</span>
                     </a>
                     <div class="auth-actions">
-                        <a href={{ route('login.index') }} class="btn btn-outline active">Log In</a>
-                        <a href={{ route('register.index') }} class="btn btn-outline">Sign Up</a>
+                        <a href={{ route('login.index') }} class="btn btn-outline">Log In</a>
+                        <a href={{ route('register.index') }} class="btn btn-primary active">Sign Up</a>
                     </div>
                     <button class="mobile-menu-toggle">
                         <i class="fas fa-bars"></i>
@@ -33,39 +33,24 @@
         </header>
 
         <!-- Form Section -->
-        @if (session('success'))
-            <div id="success-alert"
-                class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 flex justify-between items-center gap-4"
-                role="alert" style="width: 100%;">
-
-                <div class="flex items-start gap-2">
-                    <i class="fas fa-check-circle text-green-600 mt-1 text-lg"></i>
-                    <div>
-                        <strong class="font-semibold">Success!</strong>
-                        <span class="block">{{ session('success') }}</span>
-                    </div>
-                </div>
-
-                <button onclick="document.getElementById('success-alert').remove()"
-                    class="text-green-700 hover:text-green-900 focus:outline-none self-center">
-                    <i class="fas fa-times text-xl" style="margin-right: 20px"></i> <!-- ✅ ukuran ikon diperbesar -->
-                </button>
-            </div>
-        @endif
         <section class="form-section">
             <div class="container">
                 <div class="form-container">
                     <div class="form-sidebar">
                         <div class="form-sidebar-content">
-                            <h2>Welcome Back</h2>
-                            <p>Log in to access your account and manage your event registrations.</p>
-                            <img src="https://images.pexels.com/photos/7103/writing-notes-idea-conference.jpg"
-                                alt="University event" class="sidebar-image">
+                            <h2>Gabung di UniEvents</h2>
+                            <p>Bikin akun biar bisa cari dan ikut berbagai acara seru di kampus.</p>
+                            <ul class="feature-list">
+                                <li><i class="fas fa-check"></i> Daftar acara spesial buat kamu</li>
+                                <li><i class="fas fa-check"></i> Lihat riwayat acara yang pernah diikutin</li>
+                                <li><i class="fas fa-check"></i> Dapat sertifikat otomatis setelah hadir</li>
+                                <li><i class="fas fa-check"></i> Rekomendasi acara yang sesuai minat kamu</li>
+                            </ul>
                         </div>
                     </div>
                     <div class="form-content">
-                        <h1>Log In</h1>
-                        <p class="form-subtitle">Enter your credentials to access your account</p>
+                        <h1>Buat Akun</h1>
+                        <p class="form-subtitle">Isi data anda</p>
 
                         @if ($errors->any())
                             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6"
@@ -76,20 +61,24 @@
                             </div>
                         @endif
 
-
-                        <form class="login-form" method="POST" action="{{ route('login.submit') }}">
+                        <form class="registration-form" method="POST"action="{{ route('register.submit') }}">
                             @csrf
                             <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email"
-                                    placeholder="Enter your email address" required>
+                                <label for="nama">Nama</label>
+                                <input type="text" id="nama" name="nama" placeholder="Masukan nama" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Alamat Email</label>
+                                <input type="email" id="email" name="email" placeholder="Masukan email address"
+                                    required>
                             </div>
 
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <div class="password-input">
-                                    <input type="password" id="password" name="password"
-                                        placeholder="Enter your password" required>
+                                    <input type="password" id="password" name="password" placeholder="Buat password"
+                                        required>
                                     <button type="button" class="password-toggle">
                                         <i class="fas fa-eye"></i>
                                     </button>
@@ -97,19 +86,17 @@
                             </div>
 
                             <div class="form-group checkbox">
-                                <div class="remember-me">
-                                    <input type="checkbox" id="remember" name="remember">
-                                    <label for="remember">Remember me</label>
-                                </div>
-                                <a href="forgot-password.html" class="forgot-password">Forgot password?</a>
+                                <input type="checkbox" id="terms" name="terms" required>
+                                <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a
+                                        href="#">Privacy Policy</a></label>
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block">Log In</button>
+                                <button type="submit" class="btn btn-primary btn-block">Buat Akun</button>
                             </div>
 
                             <div class="form-footer">
-                                <p>Don't have an account? <a href={{ route('register.index') }}>Sign Up</a></p>
+                                <p>Sudah punya akun? <a href={{ route('login.index') }}>Log In</a></p>
                             </div>
                         </form>
                     </div>

@@ -39,6 +39,7 @@ class LoginController extends Controller
             session([
                 'user' => [
                     'nama' => $data['nama'],
+                    'email' => $data['email'],
                     'nama_role' => $data['nama_role'],
                     'id_role' => $data['role'],
                     'token' => $data['token'],
