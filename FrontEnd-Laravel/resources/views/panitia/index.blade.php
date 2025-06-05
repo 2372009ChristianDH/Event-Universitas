@@ -28,7 +28,25 @@
                     </div>
                 </div>
             </header>
+            @if (session('success'))
+                <div id="success-alert"
+                    class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 flex justify-between items-center gap-4"
+                    role="alert" style="width: 100%;">
 
+                    <div class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-600 mt-1 text-lg"></i>
+                        <div>
+                            <strong class="font-semibold">Success!</strong>
+                            <span class="block">{{ session('success') }}</span>
+                        </div>
+                    </div>
+
+                    <button onclick="document.getElementById('success-alert').remove()"
+                        class="text-green-700 hover:text-green-900 focus:outline-none self-center">
+                        <i class="fas fa-times text-xl" style="margin-right: 20px"></i> <!-- ✅ ukuran ikon diperbesar -->
+                    </button>
+                </div>
+            @endif
             <!-- Dashboard Content -->
             <div class="dashboard-content">
                 <div class="dashboard-header-actions">
@@ -73,7 +91,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="dashboard-sections">
                     <div class="section active-events">
                         <div class="section-header">
@@ -96,7 +114,8 @@
                                     <tr>
                                         <td>
                                             <div class="event-info">
-                                                <img src="https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg" alt="Event">
+                                                <img src="https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg"
+                                                    alt="Event">
                                                 <div>
                                                     <h4>Annual Tech Conference 2025</h4>
                                                     <span class="event-category tech">Technology</span>
@@ -114,15 +133,18 @@
                                         <td>
                                             <div class="action-buttons">
                                                 <button class="btn-icon" title="Edit"><i class="fas fa-edit"></i></button>
-                                                <button class="btn-icon" title="Check Attendance"><i class="fas fa-qrcode"></i></button>
-                                                <button class="btn-icon" title="View Details"><i class="fas fa-eye"></i></button>
+                                                <button class="btn-icon" title="Check Attendance"><i
+                                                        class="fas fa-qrcode"></i></button>
+                                                <button class="btn-icon" title="View Details"><i
+                                                        class="fas fa-eye"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <div class="event-info">
-                                                <img src="https://images.pexels.com/photos/2774545/pexels-photo-2774545.jpeg" alt="Event">
+                                                <img src="https://images.pexels.com/photos/2774545/pexels-photo-2774545.jpeg"
+                                                    alt="Event">
                                                 <div>
                                                     <h4>Professional Development Workshop</h4>
                                                     <span class="event-category workshop">Workshop</span>
@@ -140,15 +162,18 @@
                                         <td>
                                             <div class="action-buttons">
                                                 <button class="btn-icon" title="Edit"><i class="fas fa-edit"></i></button>
-                                                <button class="btn-icon" title="Check Attendance"><i class="fas fa-qrcode"></i></button>
-                                                <button class="btn-icon" title="View Details"><i class="fas fa-eye"></i></button>
+                                                <button class="btn-icon" title="Check Attendance"><i
+                                                        class="fas fa-qrcode"></i></button>
+                                                <button class="btn-icon" title="View Details"><i
+                                                        class="fas fa-eye"></i></button>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <div class="event-info">
-                                                <img src="https://images.pexels.com/photos/3153204/pexels-photo-3153204.jpeg" alt="Event">
+                                                <img src="https://images.pexels.com/photos/3153204/pexels-photo-3153204.jpeg"
+                                                    alt="Event">
                                                 <div>
                                                     <h4>Leadership Excellence Seminar</h4>
                                                     <span class="event-category seminar">Seminar</span>
@@ -165,9 +190,12 @@
                                         </td>
                                         <td>
                                             <div class="action-buttons">
-                                                <button class="btn-icon" title="Edit"><i class="fas fa-edit"></i></button>
-                                                <button class="btn-icon" title="Check Attendance"><i class="fas fa-qrcode"></i></button>
-                                                <button class="btn-icon" title="View Details"><i class="fas fa-eye"></i></button>
+                                                <button class="btn-icon" title="Edit"><i
+                                                        class="fas fa-edit"></i></button>
+                                                <button class="btn-icon" title="Check Attendance"><i
+                                                        class="fas fa-qrcode"></i></button>
+                                                <button class="btn-icon" title="View Details"><i
+                                                        class="fas fa-eye"></i></button>
                                             </div>
                                         </td>
                                     </tr>
@@ -213,12 +241,13 @@
                                         </div>
                                     </div>
                                     <div class="attendance-actions">
-                                        <a href="committee-certificates.html" class="btn btn-sm btn-outline">Manage Certificates</a>
+                                        <a href="committee-certificates.html" class="btn btn-sm btn-outline">Manage
+                                            Certificates</a>
                                         <a href="committee-reports.html" class="btn btn-sm btn-outline">View Report</a>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="summary-card">
                                 <div class="summary-header">
                                     <h4>Blockchain Seminar (Completed)</h4>
@@ -249,7 +278,8 @@
                                         </div>
                                     </div>
                                     <div class="attendance-actions">
-                                        <a href="committee-certificates.html" class="btn btn-sm btn-outline">Manage Certificates</a>
+                                        <a href="committee-certificates.html" class="btn btn-sm btn-outline">Manage
+                                            Certificates</a>
                                         <a href="committee-reports.html" class="btn btn-sm btn-outline">View Report</a>
                                     </div>
                                 </div>

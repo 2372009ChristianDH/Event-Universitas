@@ -50,6 +50,26 @@
                                     </option>
                                 @endforeach
                             </select>
+
+                            <!-- Input Search Email -->
+                            <label for="email"
+                                style="font-weight: 600; color: #374151; font-size: 14px; min-width: 80px;">
+                                Cari Email:
+                            </label>
+                            <div style="display: flex; align-items: center; gap: 10px; flex-grow: 1; width: 100%;">
+                                <input type="text" id="email" name="email" placeholder="Masukkan email..."
+                                    value="{{ request('email') }}"
+                                    style="padding: 12px 16px; border-radius: 10px; border: 2px solid #e5e7eb; min-width: 250px; color: #374151; font-weight: 500;"
+                                    onfocus="this.style.borderColor='#4f46e5'; this.style.boxShadow='0 0 0 3px rgba(79, 70, 229, 0.1)'"
+                                    onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='none'">
+                                <button type="submit"
+                                    style="background: #4f46e5; color: white; padding: 8px 20px; border-radius: 10px; border: none; cursor: pointer; font-weight: 600; display: flex; align-items: center; transition: background 0.3s ease;">
+                                    <i class="fas fa-search" style="margin-right: 8px;"></i>
+                                    Cari
+                                </button>
+
+                            </div>
+
                             <div style="margin-left: auto;">
                                 <span
                                     style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 600;">{{ count($users) }}
@@ -59,6 +79,26 @@
                     </div>
                 </form>
 
+            @if (session('success'))
+                <div id="success-alert"
+                    class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 flex justify-between items-center gap-4"
+                    role="alert" style="width: 100%;">
+
+                    <div class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-600 mt-1 text-lg"></i>
+                        <div>
+                            <strong class="font-semibold">Success!</strong>
+                            <span class="block">{{ session('success') }}</span>
+                        </div>
+                    </div>
+
+                    <button onclick="document.getElementById('success-alert').remove()"
+                        class="text-green-700 hover:text-green-900 focus:outline-none self-center">
+                        <i class="fas fa-times text-xl" style="margin-right: 20px"></i> <!-- ✅ ukuran ikon diperbesar -->
+                    </button>
+                </div>
+            @endif
+
                 {{-- tamabah user --}}
                 <div class="create-event-button"
                     style="margin-top: 20px; margin-right:50px; margin-bottom:25px; text-align: right;">
@@ -67,7 +107,7 @@
                     </a>
                 </div>
 
-               {{-- table user --}}
+                {{-- table user --}}
                 <div
                     style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;">
                     <table style="width: 100%; border-collapse: collapse;">
@@ -99,7 +139,8 @@
                                     <td style="padding: 20px; text-align: center; color: #374151; font-weight: 600;">
                                         <div
                                             style="display: flex; align-items: center; justify-content: center; gap: 12px;">
-                                            <div style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 16px;">
+                                            <div
+                                                style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 16px;">
                                                 {{ strtoupper(substr($user['nama'], 0, 1)) }}
                                             </div>
                                             <span>{{ $user['nama'] }}</span>
@@ -112,7 +153,7 @@
                                     <td style="padding: 20px; text-align: center;">{{ $user->role['nama_role'] }}</td>
                                     <td style="padding: 20px; text-align: center;">
                                         <div>
-                                            <a class="btn-icon" title="Edit"><i class="fas fa-edit"></i></a>
+                                            <a href="{{ route('admin.user.edit', ['id' => $user->id_user]) }}" class="btn-icon" title="Edit"><i class="fas fa-edit"></i></a>
                                             <a class="btn-icon" title="Delete"><i class="fas fa-trash-alt"></i></a>
                                         </div>
                                     </td>

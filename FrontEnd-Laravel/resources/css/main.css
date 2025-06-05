@@ -594,17 +594,18 @@ ul, ol {
 }
 
 .event-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid var(--gray-200);
-  padding-top: var(--spacing);
+    display: flex;
+    gap: 8px; /* Jarak antar tombol */
+    justify-content: flex-start; /* Biar tetap di kiri */
+    align-items: center;
 }
 
 .event-price {
-  font-weight: 600;
-  font-size: 1.125rem;
-  color: var(--gray-800);
+    margin-top: -5px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
 }
 
 /* How It Works */

@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class RegisterController extends Controller
 {
@@ -15,30 +16,21 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi sisi frontend Laravel
+        // Validasi input
         $request->validate([
             'nama' => 'required|string|max:255',
-            'email' => 'required|email',
-            'password' => 'required|string|min:8',
+            'email' => 'required|email|unique:user,email',
+            'password' => 'required|string|min:8', // gunakan password_confirmation
         ]);
 
-        // Kirim request POST ke backend Node.js
-        $response = Http::post('http://localhost:5000/api/auth/register', [
+        // Simpan user ke database
+        $user = User::create([
             'nama' => $request->nama,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
+            'id_role' => 4, // default role peserta
         ]);
 
-        if ($response->successful()) {
-            // Jika sukses, redirect atau tampil pesan sukses
-            return redirect('/login')->with('success', $response['message']);
-        }
-
-        // Jika gagal, ambil pesan error dari response Node.js dan kembali ke form
-        $errorMessage = $response->json('message') ?? 'Registrasi gagal';
-
-        return redirect()->back()->withInput()->withErrors(['error' => $errorMessage]);
-
-        return view('auth.login');
+        return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');
     }
 }

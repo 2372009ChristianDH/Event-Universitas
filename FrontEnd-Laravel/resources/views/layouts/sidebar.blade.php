@@ -40,11 +40,10 @@
                 @if (session('user.id_role') == 1)
                     <li><a href="/admin/index"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
                     <li><a href="/admin/user/index"><i class="fas fa-users"></i><span>Data User</span></a></li>
-                    <li><a href="/admin-events"><i class="fas fa-calendar-alt"></i><span>Semua Event</span></a></li>
                     {{-- Panitia --}}
                 @elseif (session('user.id_role') == 2)
                     <li><a href="/panitia/index"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
-                    <li><a href="/panitia/event"><i class="fas fa-plus-circle"></i><span>Event</span></a></li>
+                    <li><a href="{{ route('panitia.event.index') }}"><i class="fas fa-plus-circle"></i><span>Buat Event</span></a></li>
                     <li><a href="/panitia/absensi"><i class="fas fa-qrcode"></i><span>Absensi Scanner</span></a></li>
                     <li><a href=""><i class="fas fa-chart-bar"></i><span>Laporan</span></a></li>
                     {{-- Keuangan --}}
@@ -55,8 +54,8 @@
                     </li>
                     {{-- peserta --}}
                 @elseif (session('user.id_role') == 4)
-                    <li><a href="/peserta/index"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
-                    <li><a href="/peserta/event"><i class="fas fa-calendar-alt"></i><span>Event</span></a></li>
+                    <li><a href=""><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+                    <li><a href="{{ route('peserta.event.index') }}"><i class="fas fa-calendar-alt"></i><span>Event</span></a></li>
                     <li><a href="/peserta/eventSertifikat"><i
                                 class="fas fa-certificate"></i><span>Sertifikat</span></a></li>
                     <li><a href=""><i class="fas fa-credit-card"></i><span>Riwayat Pembayaran</span></a></li>

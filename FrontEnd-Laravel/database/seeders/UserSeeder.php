@@ -16,29 +16,11 @@ class UserSeeder extends Seeder
     {
         DB::table('user')->insert([
             [
-                'nama' => 'Christian',
-                'email' => 'Christian@maranatha.ac.id',
+                'nama' => 'admin',
+                'email' => 'admin@maranatha.ac.id',
                 'password' => Hash::make('password123'),
                 'id_role' => 1,
-            ],
-            [
-                'nama' => 'Marchell',
-                'email' => 'Marchell@maranatha.ac.id',
-                'password' => Hash::make('password123'),
-                'id_role' => 2,
-            ],
-            [
-                'nama' => 'Raymond',
-                'email' => 'Raymond@maranatha.ac.id',
-                'password' => Hash::make('password123'),
-                'id_role' => 3,
-            ],
-            [
-                'nama' => 'Anthony',
-                'email' => 'Anthony@maranatha.ac.id',
-                'password' => Hash::make('password123'),
-                'id_role' => 4,
-            ],
+            ]
         ]);
     }
 }

@@ -23,8 +23,16 @@
                         <p>Masukkan detail untuk User baru</p>
                     </div>
 
-                    <form metthod="POST" action="">
+                    <form method="POST" action="{{ route('admin.user.store') }}" class="form-horizontal">
                         @csrf
+                        @if ($errors->any())
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6"
+                                style="margin-top:-15px;" role="alert">
+                                @foreach ($errors->all() as $error)
+                                    <p style="margin-top: 11px;">{{ $error }}</p>
+                                @endforeach
+                            </div>
+                        @endif
                         <div class="admin-form-section">
                             <h3 style="margin-top: -20px;"></h3>
                             <div class="form-group">
@@ -35,48 +43,25 @@
                                 <label for="email">Email Address</label>
                                 <input type="email" id="email" name="email" required>
                             </div>
-                            <label for="email">Pilih Role</label>
-                            <select name="role" id="role" class="form-control">
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password" required>
+                            </div>
+                            <label for="id_role">Pilih Role</label>
+                            <select name="id_role" id="id_role" class="form-control" required>
                                 <option value="">-- Pilih Role --</option>
                                 @foreach ($roles as $role)
-                                    <option value="{{ strtolower($role->nama_role) }}">{{ $role->nama_role }}</option>
+                                    <option value="{{ $role->id_role }}">{{ $role->nama_role }}</option>
                                 @endforeach
                             </select>
                         </div>
 
-                        <div class="admin-form-section">
-                            <h3>Access & Permissions</h3>
-                            <div class="form-group">
-                                <label for="access_level">Access Level</label>
-                                <select id="access_level" name="access_level" required>
-                                    <option value="standard">Standard Access</option>
-                                    <option value="elevated">Elevated Access</option>
-                                    <option value="full">Full Access</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group checkbox">
-                                <input type="checkbox" id="event_management" name="permissions[]" value="event_management">
-                                <label for="event_management">Event Management</label>
-                            </div>
-
-                            <div class="form-group checkbox">
-                                <input type="checkbox" id="financial_access" name="permissions[]" value="financial_access">
-                                <label for="financial_access">Financial Access</label>
-                            </div>
-
-                            <div class="form-group checkbox">
-                                <input type="checkbox" id="user_management" name="permissions[]" value="user_management">
-                                <label for="user_management">User Management</label>
-                            </div>
-                        </div>
-
                         <div class="admin-form-footer">
-                            <a href="{{ route('admin.user.index') }}" class="btn btn-outline">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Add Team Member</button>
+                            <a href="{{ route('admin.user.index') }}" class="btn btn-outline">Batal</a>
+                            <button type="submit" class="btn btn-primary">Tambah</button>
                         </div>
                     </form>
                 </div>
             </div>
         </main>
-@endsection
+    @endsection

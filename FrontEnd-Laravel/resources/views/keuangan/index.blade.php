@@ -29,6 +29,26 @@
                 </div>
             </header>
 
+            @if (session('success'))
+                <div id="success-alert"
+                    class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 flex justify-between items-center gap-4"
+                    role="alert" style="width: 100%;">
+
+                    <div class="flex items-start gap-2">
+                        <i class="fas fa-check-circle text-green-600 mt-1 text-lg"></i>
+                        <div>
+                            <strong class="font-semibold">Success!</strong>
+                            <span class="block">{{ session('success') }}</span>
+                        </div>
+                    </div>
+
+                    <button onclick="document.getElementById('success-alert').remove()"
+                        class="text-green-700 hover:text-green-900 focus:outline-none self-center">
+                        <i class="fas fa-times text-xl" style="margin-right: 20px"></i> <!-- ✅ ukuran ikon diperbesar -->
+                    </button>
+                </div>
+            @endif
+
             <!-- Dashboard Content -->
             <div class="dashboard-content">
                 <div class="dashboard-welcome">
@@ -92,7 +112,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="dashboard-sections">
                     <div class="section pending-payments">
                         <div class="section-header">
@@ -115,7 +135,8 @@
                                     <tr>
                                         <td>
                                             <div class="user-info">
-                                                <img src="https://images.pexels.com/photos/3771807/pexels-photo-3771807.jpeg" alt="User">
+                                                <img src="https://images.pexels.com/photos/3771807/pexels-photo-3771807.jpeg"
+                                                    alt="User">
                                                 <span>Emma Wilson</span>
                                             </div>
                                         </td>
@@ -141,7 +162,8 @@
                                     <tr>
                                         <td>
                                             <div class="user-info">
-                                                <img src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg" alt="User">
+                                                <img src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg"
+                                                    alt="User">
                                                 <span>Michael Chen</span>
                                             </div>
                                         </td>
@@ -167,7 +189,8 @@
                                     <tr>
                                         <td>
                                             <div class="user-info">
-                                                <img src="https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg" alt="User">
+                                                <img src="https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg"
+                                                    alt="User">
                                                 <span>Jessica Adams</span>
                                             </div>
                                         </td>
