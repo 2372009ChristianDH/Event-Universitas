@@ -21,11 +21,19 @@ class DetailKegiatan extends Model
         'waktu_selesai',
         'lokasi',
         'narasumber',
+        'biaya_registrasi',
+        'maksimal_peserta',
+        'status',
     ];
 
     public function kegiatan()
     {
         return $this->belongsTo(Kegiatan::class, 'id_kegiatan');
+    }
+
+    public function registrasi()
+    {
+        return $this->hasMany(RegistrasiKegiatan::class, 'id_detail_kegiatan', 'id_detail_kegiatan');
     }
 }
 

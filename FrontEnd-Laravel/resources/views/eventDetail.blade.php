@@ -43,10 +43,6 @@
                                 <div class="event-title-container">
                                     <h1>{{ $kegiatan->nama_kegiatan }}</h1>
                                     <div class="event-info">
-                                        <p style="color: white"><i class="fas fa-users"></i> Maksimal
-                                            {{ $kegiatan->maksimal_peserta }} peserta</p>
-                                    </div>
-                                    <div class="event-info" style="margin-top: -15px;">
                                         <p style="color: white"><i class="fas fa-pencil-alt"></i> Status :
                                             {{ $kegiatan->status }}</p>
                                     </div>
@@ -61,6 +57,26 @@
                         </div>
                     </div>
                 </div>
+                @if (session('success'))
+                    <div id="success-alert" style="margin-top: -15; margin-bottom: 15px;"
+                        class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 flex justify-between items-center gap-4"
+                        role="alert" style="width: 100%;">
+
+                        <div class="flex items-start gap-2">
+                            <i class="fas fa-check-circle text-green-600 mt-1 text-lg"></i>
+                            <div>
+                                <strong class="font-semibold">Success!</strong>
+                                <span class="block">{{ session('success') }}</span>
+                            </div>
+                        </div>
+
+                        <button onclick="document.getElementById('success-alert').remove()"
+                            class="text-green-700 hover:text-green-900 focus:outline-none self-center">
+                            <i class="fas fa-times text-xl" style="margin-right: 20px"></i>
+                            <!-- ✅ ukuran ikon diperbesar -->
+                        </button>
+                    </div>
+                @endif
 
                 <div class="container">
                     <div class="event-content-wrapper">
@@ -72,117 +88,118 @@
                                         <div class="timeline-item">
                                             <div class="timeline-content">
                                                 <h3>Sesi: {{ $sesi->sesi }}</h3>
+                                                <div>
+                                                    <i class="fas fa-tag"></i> Nama Sesi : {{ $sesi->nama_sesi }}
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-calendar-alt"></i> Tanggal :
+                                                    {{ \Carbon\Carbon::parse($sesi->tanggal)->format('d M Y') }}
+                                                </div>
                                                 <div class="event-time">
-                                                    <i class="fas fa-clock"></i>
+                                                    <i class="fas fa-clock"></i> Waktu :
                                                     {{ \Carbon\Carbon::parse($sesi->waktu_mulai)->format('H:i') }} -
                                                     {{ \Carbon\Carbon::parse($sesi->waktu_selesai)->format('H:i') }}
                                                 </div>
                                                 <div>
-                                                    <i class="fas fa-map-marker-alt"></i> {{ $sesi->lokasi }}
+                                                    <i class="fas fa-map-marker-alt"></i> Lokasi : {{ $sesi->lokasi }}
                                                 </div>
                                                 <div class="event-speaker">
-                                                    <i class="fas fa-user"></i> {{ $sesi->narasumber }}
+                                                    <i class="fas fa-user"></i> Narasumber : {{ $sesi->narasumber }}
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-money-bill-wave"></i> Harga : Rp.
+                                                    {{ number_format($sesi->biaya_registrasi, 0, ',', '.') }}
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-users"></i> Maksimal : {{ $sesi->maksimal_peserta }}
+                                                    peserta
                                                 </div>
                                             </div>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
-
-
-                            <div class="event-section">
-                                <h2>Speakers</h2>
-                                <div class="speakers-grid">
-                                    <div class="speaker-card">
-                                        <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg"
-                                            alt="Prof. Jonathan Blake">
-                                        <h4>Prof. Jonathan Blake</h4>
-                                        <p>Head of Computer Science</p>
-                                    </div>
-                                    <div class="speaker-card">
-                                        <img src="https://images.pexels.com/photos/3771807/pexels-photo-3771807.jpeg"
-                                            alt="Dr. Sarah Johnson">
-                                        <h4>Dr. Sarah Johnson</h4>
-                                        <p>Tech Futurist</p>
-                                    </div>
-                                    <div class="speaker-card">
-                                        <img src="https://images.pexels.com/photos/3778680/pexels-photo-3778680.jpeg"
-                                            alt="Michael Rodriguez">
-                                        <h4>Michael Rodriguez</h4>
-                                        <p>AI Research Lead</p>
-                                    </div>
-                                    <div class="speaker-card">
-                                        <img src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg"
-                                            alt="Lisa Chen">
-                                        <h4>Lisa Chen</h4>
-                                        <p>Blockchain Specialist</p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
-                        <div class="event-sidebar">
-                            <div class="registration-card">
-                                <div class="card-header">
-                                    <h3>Detail Registrasi</h3>
-                                </div>
-                                <div class="card-body">
-                                    <div class="price-badge">
-                                        <span class="currency">Rp.</span>
-                                        <span class="amount">{{ number_format($kegiatan->biaya_registrasi, 0, ',', '.') }}</span>
-                                        
+                        @if (session('user.id_role') === 4)
+                            <div class="event-sidebar">
+                                <div class="registration-card">
+                                    <div class="card-header">
+                                        <h3>Registrasi</h3>
                                     </div>
-                                    <div class="registration-info">
-                                        <div class="info-item">
-                                            <span class="label">Available Spots</span>
-                                            <span class="value"> / {{ $kegiatan->maksimal_peserta }}</span>
-                                        </div>
-                                        <div class="info-item">
-                                            <span class="label">Registration Deadline</span>
-                                            <span class="value">{{ \Carbon\Carbon::parse($kegiatan->tanggal_selesai)->format('d M Y') }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <a href="event-registration.html" class="btn btn-primary btn-block">Register Now</a>
-                                    </div>
-                                </div>
-                            </div>
+                                    <div class="card-body">
+                                        {{-- <div class="price-badge">
+                                            <span class="currency">Rp.</span>
+                                            <span
+                                                class="amount">{{ number_format($kegiatan->biaya_registrasi, 0, ',', '.') }}</span>
+                                        </div> --}}
+                                        <div class="registration-info">
+                                            @foreach ($detailKegiatan as $sesi)
+                                                <div class="info-item">
+                                                    <span class="label">Kapasitas Sesi {{ $sesi->sesi }}
+                                                        {{-- Cek apakah user sudah daftar sesi ini --}}
+                                                        @if ($sesi->registrasi->isNotEmpty())
+                                                            <span style="color: green; font-weight: bold;">(Sudah
+                                                                daftar)</span>
+                                                        @endif
+                                                    </span>
+                                                    <span class="value">
+                                                        {{ $sesi->registrasi_count }} / {{ $sesi->maksimal_peserta }}
 
-                            <div class="event-location">
-                                <h3>Location</h3>
-                                <div class="location-info">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <div>
-                                        <p class="location-name">Main Auditorium</p>
-                                        <p class="location-address">University Campus, Building 3, Floor 1</p>
-                                        <p class="location-city">University City, UC 12345</p>
+                                                    </span>
+                                                </div>
+                                            @endforeach
+
+
+                                            <div class="info-item">
+                                                <span class="label">Batas Waktu Pendaftaran</span>
+                                                <span
+                                                    class="value">{{ \Carbon\Carbon::parse($kegiatan->tanggal_mulai)->format('d M Y') }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <a href="{{ route('peserta.event.create', ['id_kegiatan' => $kegiatan->id_kegiatan]) }}"
+                                                class="btn btn-primary btn-block">Registrasi Sekarang!</a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="location-map">
-                                    <img src="https://images.pexels.com/photos/408503/pexels-photo-408503.jpeg"
-                                        alt="Map location">
-                                    <a href="#" class="btn btn-outline btn-sm">View on Map</a>
-                                </div>
-                            </div>
 
-                            <div class="share-event">
-                                <h3>Share This Event</h3>
-                                <div class="share-buttons">
-                                    <a href="#" class="share-button facebook">
-                                        <i class="fab fa-facebook-f"></i>
-                                    </a>
-                                    <a href="#" class="share-button twitter">
-                                        <i class="fab fa-twitter"></i>
-                                    </a>
-                                    <a href="#" class="share-button linkedin">
-                                        <i class="fab fa-linkedin-in"></i>
-                                    </a>
-                                    <a href="#" class="share-button email">
-                                        <i class="fas fa-envelope"></i>
-                                    </a>
+                                <div class="event-location">
+                                    <h3>Location</h3>
+                                    <div class="location-info">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <div>
+                                            <p class="location-name">Main Auditorium</p>
+                                            <p class="location-address">University Campus, Building 3, Floor 1</p>
+                                            <p class="location-city">University City, UC 12345</p>
+                                        </div>
+                                    </div>
+                                    <div class="location-map">
+                                        <img src="https://images.pexels.com/photos/408503/pexels-photo-408503.jpeg"
+                                            alt="Map location">
+                                        <a href="#" class="btn btn-outline btn-sm">View on Map</a>
+                                    </div>
+                                </div>
+
+                                <div class="share-event">
+                                    <h3>Share This Event</h3>
+                                    <div class="share-buttons">
+                                        <a href="#" class="share-button facebook">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </a>
+                                        <a href="#" class="share-button twitter">
+                                            <i class="fab fa-twitter"></i>
+                                        </a>
+                                        <a href="#" class="share-button linkedin">
+                                            <i class="fab fa-linkedin-in"></i>
+                                        </a>
+                                        <a href="#" class="share-button email">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
 
                     <!-- Related Events -->

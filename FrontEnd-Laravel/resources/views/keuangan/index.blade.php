@@ -10,7 +10,7 @@
                         <i class="fas fa-bars"></i>
                     </button>
                     <div class="header-title">
-                        <h1>Finance Dashboard</h1>
+                        <h1>Keungan Dashboard</h1>
                     </div>
                     <div class="header-actions">
                         <div class="search-bar">
@@ -52,8 +52,8 @@
             <!-- Dashboard Content -->
             <div class="dashboard-content">
                 <div class="dashboard-welcome">
-                    <h2>Finance Management</h2>
-                    <p>Manage payments and financial records for university events</p>
+                    <h2>Manajemen Keuangan</h2>
+                    <p>Mengelola pembayaran dan catatan keuangan untuk event universitas</p>
                 </div>
 
                 <div class="dashboard-stats">
@@ -62,157 +62,101 @@
                             <i class="fas fa-clock"></i>
                         </div>
                         <div class="stat-info">
-                            <h3>24</h3>
-                            <p>Pending Verifications</p>
-                        </div>
-                        <div class="stat-change">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>8</span>
-                            <span>New Today</span>
+                            <h3>{{ $pendingVerifications }}</h3>
+                            <p>Menunggu Persetujuan</p>
                         </div>
                     </div>
+
                     <div class="stat-card">
                         <div class="stat-icon green">
                             <i class="fas fa-check-circle"></i>
                         </div>
                         <div class="stat-info">
-                            <h3>185</h3>
-                            <p>Verified Payments</p>
-                        </div>
-                        <div class="stat-change">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>12</span>
-                            <span>This Week</span>
+                            <h3>{{ $disetujui }}</h3>
+                            <p>Pemabayran Disetujui</p>
                         </div>
                     </div>
+
                     <div class="stat-card">
-                        <div class="stat-icon blue">
-                            <i class="fas fa-dollar-sign"></i>
+                        <div class="stat-icon red">
+                            <i class="fas fa-times-circle"></i>
                         </div>
                         <div class="stat-info">
-                            <h3>$4,850</h3>
-                            <p>Total Revenue</p>
-                        </div>
-                        <div class="stat-change">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>15%</span>
+                            <h3>{{ $ditolak }}</h3>
+                            <p>Pemabayran Ditolak</p>
                         </div>
                     </div>
+
                     <div class="stat-card">
                         <div class="stat-icon purple">
                             <i class="fas fa-calendar-check"></i>
                         </div>
                         <div class="stat-info">
-                            <h3>48</h3>
-                            <p>Active Events</p>
-                        </div>
-                        <div class="stat-change">
-                            <i class="fas fa-equals"></i>
-                            <span>0%</span>
+                            <h3>{{ $activeEvents }}</h3>
+                            <p>Event Aktif</p>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="dashboard-sections">
                     <div class="section pending-payments">
                         <div class="section-header">
-                            <h3>Pending Payment Verifications</h3>
+                            <h3>Menunggu Persetujuan</h3>
                             <a href="finance-pending.html">View All</a>
                         </div>
                         <div class="payment-table-wrapper">
                             <table class="data-table">
                                 <thead>
                                     <tr>
-                                        <th>User</th>
-                                        <th>Event</th>
-                                        <th>Amount</th>
-                                        <th>Date</th>
-                                        <th>Receipt</th>
-                                        <th>Actions</th>
+                                        <th>Nama</th>
+                                        <th>Nama Event</th>
+                                        <th>Tanggal Registrasi</th>
+                                        <th>Status</th>
+                                        {{-- <th>Actions</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="user-info">
-                                                <img src="https://images.pexels.com/photos/3771807/pexels-photo-3771807.jpeg"
-                                                    alt="User">
-                                                <span>Emma Wilson</span>
-                                            </div>
-                                        </td>
-                                        <td>Annual Tech Conference 2025</td>
-                                        <td>$25.00</td>
-                                        <td>Jun 10, 2025</td>
-                                        <td>
-                                            <button class="btn-icon view-receipt" title="View Receipt">
-                                                <i class="fas fa-file-invoice"></i>
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button class="btn-icon approve" title="Approve">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                                <button class="btn-icon reject" title="Reject">
-                                                    <i class="fas fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="user-info">
-                                                <img src="https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg"
-                                                    alt="User">
-                                                <span>Michael Chen</span>
-                                            </div>
-                                        </td>
-                                        <td>Leadership Excellence Seminar</td>
-                                        <td>$20.00</td>
-                                        <td>Jun 9, 2025</td>
-                                        <td>
-                                            <button class="btn-icon view-receipt" title="View Receipt">
-                                                <i class="fas fa-file-invoice"></i>
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button class="btn-icon approve" title="Approve">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                                <button class="btn-icon reject" title="Reject">
-                                                    <i class="fas fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="user-info">
-                                                <img src="https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg"
-                                                    alt="User">
-                                                <span>Jessica Adams</span>
-                                            </div>
-                                        </td>
-                                        <td>Professional Development Workshop</td>
-                                        <td>$15.00</td>
-                                        <td>Jun 8, 2025</td>
-                                        <td>
-                                            <button class="btn-icon view-receipt" title="View Receipt">
-                                                <i class="fas fa-file-invoice"></i>
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button class="btn-icon approve" title="Approve">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                                <button class="btn-icon reject" title="Reject">
-                                                    <i class="fas fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    @forelse ($pendingRegistrasi as $reg)
+                                        <tr>
+                                            <td>
+                                                <div class="user-info">
+                                                    <span>{{ $reg->user->nama }}</span>
+                                                </div>
+                                            </td>
+                                            <td>{{ $reg->detailKegiatan->kegiatan->nama_kegiatan ?? 'N/A' }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($reg->tanggal_registrasi)->format('d M Y') }}</td>
+                                            {{-- <td>
+                                                <a href="{{ asset('storage/' . $reg->bukti_pembayaran) }}" target="_blank"
+                                                    class="btn-icon view-receipt" title="View Receipt">
+                                                    <i class="fas fa-file-invoice"></i>
+                                                </a>
+                                            </td> --}}
+                                            <td>{{ $reg->status_konfirmasi }}</td>
+                                            {{-- <td>
+                                                <div class="action-buttons">
+                                                    <form action=""
+                                                        method="POST" style="display:inline;">
+                                                        @csrf
+                                                        <button type="submit" class="btn-icon approve" title="Approve">
+                                                            <i class="fas fa-check"></i>
+                                                        </button>
+                                                    </form>
+                                                    <form action=""
+                                                        method="POST" style="display:inline;">
+                                                        @csrf
+                                                        <button type="submit" class="btn-icon reject" title="Reject">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td> --}}
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" class="text-center">Tidak ada registrasi pending.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

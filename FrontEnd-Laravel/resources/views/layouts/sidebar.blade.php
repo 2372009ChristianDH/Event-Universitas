@@ -49,7 +49,7 @@
                     {{-- Keuangan --}}
                 @elseif (session('user.id_role') == 3)
                     <li><a href="/keuangan/index"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
-                    <li><a href="/finance-pending"><i class="fas fa-clock"></i><span>Laporan Pembayaran</span></a></li>
+                    <li><a href="{{ route('keuangan.laporanPembayaran') }}"><i class="fas fa-clock"></i><span>Laporan Pembayaran</span></a></li>
                     <li><a href="/finance-reports"><i class="fas fa-chart-line"></i><span>Laporan Keuangan</span></a>
                     </li>
                     {{-- peserta --}}

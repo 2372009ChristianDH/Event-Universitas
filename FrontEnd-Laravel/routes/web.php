@@ -4,10 +4,11 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Panitia\PanitiaController;
+use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\Panitia\EventController;
 use App\Http\Middleware\AuthenticateRole;
 use App\Http\Controllers\PesertaController;
+use App\Http\Controllers\AbsensiController;
 
 Route::get('/', function () {
     return view('index');
@@ -33,15 +34,15 @@ Route::middleware([AuthenticateRole::class . ':Peserta'])->group(function () {
     });
     
     Route::get('/peserta/event/index', [PesertaController::class, 'index'])->name('peserta.event.index');
+    Route::get('/peserta/registrasi/{id_kegiatan}', [PesertaController::class, 'create'])->name('peserta.event.create');
+    Route::post('/peserta/event/store', [PesertaController::class, 'store'])->name('peserta.event.store');
+
 
     Route::get('/peserta/index', function () {
         return view('peserta.index');
     });
     Route::get('/peserta/event', function () {
         return view('peserta.event');
-    });
-    Route::get('/peserta/eventDetail', function () {
-        return view('peserta.eventDetail');
     });
     Route::get('/peserta/eventRegristrasi', function () {
         return view('peserta.eventRegristrasi');
@@ -79,6 +80,10 @@ Route::middleware([AuthenticateRole::class . ':Keuangan'])->group(function () {
     Route::get('/keuangan/index', function () {
         return view('keuangan.index');
     });
+    Route::get('keuangan/index', [KeuanganController::class, 'index'])->name('keuangan.index');
+    Route::get('keuangan/laporanPembayaran', [KeuanganController::class, 'indexLP'])->name('keuangan.laporanPembayaran');
+    Route::post('keuangan/laporanPembayaran/{id}/terima', [KeuanganController::class, 'terima'])->name('registrasi.terima');
+    Route::post('keuangan/laporanPembayaran/{id}/tolak', [KeuanganController::class, 'tolak'])->name('registrasi.tolak');
 });
 
 
@@ -98,6 +103,6 @@ Route::middleware([AuthenticateRole::class . ':Admin'])->group(function () {
 Route::middleware([AuthenticateRole::class . ':Panitia,Admin,Keuangan,Peserta'])->get('/setting', function () {
     return view('setting');
 });
-Route::middleware([AuthenticateRole::class . ':Panitia,Admin,Keuangan,Peserta'])->get('/eventDetail{id}', [EventController::class, 'eventDetail'])->name('event.detailEvent'); 
+Route::middleware([AuthenticateRole::class . ':Panitia,Admin,Keuangan,Peserta'])->get('/eventDetail/{id}', [EventController::class, 'eventDetail'])->name('event.detailEvent'); 
 
-
+Route::get('/absensi/scan/{id}', [AbsensiController::class, 'scan'])->name('absensi.scan');

@@ -35,10 +35,6 @@
                         @csrf
                         <div class="admin-form-section">
                             <div class="form-group">
-                                <label for="sesi">Sesi</label>
-                                <input type="number" id="sesi" name="sesi" min="1" required>
-                            </div>
-                            <div class="form-group">
                                 <label for="nama_sesi">Judul Sesi</label>
                                 <input type="text" id="nama_sesi" name="nama_sesi" required>
                             </div>
@@ -62,10 +58,18 @@
                                 <label for="narasumber">Narasumber</label>
                                 <input type="text" id="narasumber" name="narasumber" required>
                             </div>
+                            <div class="form-group">
+                                <label for="biaya_registrasi">Biaya Registrasi</label>
+                                <input type="number" id="biaya_registrasi" name="biaya_registrasi" step="0.01" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="maksimal_peserta">Maksimal Peserta</label>
+                                <input type="number" id="maksimal_peserta" name="maksimal_peserta" min="1" required>
+                            </div>
                         </div>
                         <div class="admin-form-footer">
                             <a href="{{ route('panitia.event.index') }}" class="btn btn-outline">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Buat Event</button>
+                            <button type="submit" class="btn btn-primary">Buat Sesi</button>
                         </div>
                     </form>
                 </div>

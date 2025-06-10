@@ -63,56 +63,66 @@ class EventController extends Controller
     public function storeSesi(Request $request, $id_kegiatan)
     {
         $request->validate([
-            'sesi' => 'required|integer|min:1',
             'nama_sesi' => 'required|string|max:100',
             'tanggal' => 'required|date',
             'waktu_mulai' => 'required|date_format:H:i',
             'waktu_selesai' => 'required|date_format:H:i|after_or_equal:waktu_mulai',
             'lokasi' => 'required|string|max:255',
             'narasumber' => 'required|string|max:150',
+            'biaya_registrasi' => 'required|numeric|min:0',
+            'maksimal_peserta' => 'required|integer|min:1',
         ]);
 
+        // Hitung jumlah sesi yang sudah ada untuk id_kegiatan ini
+        $jumlahSesi = DetailKegiatan::where('id_kegiatan', $id_kegiatan)->count();
+        $nomorSesi = $jumlahSesi + 1;
+
+        // Simpan ke database
         $detailKegiatan = DetailKegiatan::create([
             'id_kegiatan' => $id_kegiatan,
-            'sesi' => $request->sesi,
+            'sesi' => $nomorSesi,
             'nama_sesi' => $request->nama_sesi,
             'waktu_mulai' => $request->waktu_mulai,
             'waktu_selesai' => $request->waktu_selesai,
             'tanggal' => $request->tanggal,
             'lokasi' => $request->lokasi,
             'narasumber' => $request->narasumber,
+            'biaya_registrasi' => $request->biaya_registrasi,
+            'maksimal_peserta' => $request->maksimal_peserta,
+            'status' => 'Coming Soon',
         ]);
 
         return redirect()->route('panitia.event.index')->with('success', 'Sesi berhasil ditambahkan!');
     }
 
+
     public function eventDetail($id_kegiatan)
     {
-        // Ambil 1 kegiatan berdasarkan id_kegiatan dan id_user
-        $kegiatan = Kegiatan::where('id_kegiatan', $id_kegiatan)
-            ->where('id_user', session('user.id'))
-            ->firstOrFail();
+        $kegiatan = Kegiatan::where('id_kegiatan', $id_kegiatan)->firstOrFail();
+        $userId = session('user.id'); // pastikan ini sesuai session kamu
 
-        // Format tanggal tampilannya
+        // Ambil detail kegiatan lengkap dengan:
+        // 1. Hitung total registrasi (kuota terpakai)
+        // 2. Cek apakah user sudah registrasi di sesi ini (relasi dengan filter user)
+        $detailKegiatan = DetailKegiatan::withCount('registrasi')
+            ->with(['registrasi' => function ($query) use ($userId) {
+                $query->where('id_user', $userId);
+            }])
+            ->where('id_kegiatan', $id_kegiatan)
+            ->orderBy('sesi', 'asc')
+            ->get();
+
+        // Format tanggal event
         $start = \Carbon\Carbon::parse($kegiatan->tanggal_mulai);
         $end = \Carbon\Carbon::parse($kegiatan->tanggal_selesai);
 
         if ($start->isSameDay($end)) {
-            // Event 1 hari
             $kegiatan->tanggal_display = $start->format('d M');
         } elseif ($start->format('M') === $end->format('M')) {
-            // Tanggal beda tapi bulan sama, contoh: 03 – 04 Jun
             $kegiatan->tanggal_display = $start->format('d') . ' – ' . $end->format('d M');
         } else {
-            // Tanggal dan bulan beda, contoh: 30 Jun – 02 Jul
             $kegiatan->tanggal_display = $start->format('d M') . ' – ' . $end->format('d M');
         }
-
-
-        // Ambil detail kegiatan
-        $detailKegiatan = DetailKegiatan::where('id_kegiatan', $id_kegiatan)
-            ->orderBy('sesi', 'asc')
-            ->get();
 
         return view('eventDetail', compact('kegiatan', 'detailKegiatan'));
     }

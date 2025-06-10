@@ -8,7 +8,7 @@
                         <i class="fas fa-bars"></i>
                     </button>
                     <div class="header-title">
-                        <h1>Buat Event</h1>
+                        <h1>Event</h1>
                     </div>
                     <div class="header-actions">
                         <div class="search-bar">
@@ -59,11 +59,6 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="create-event-button" style="margin-top: 20px;">
-                            <a href="{{ route('panitia.event.create') }}" class="btn btn-primary">
-                                <i class="fas fa-plus"></i> Buat Event Baru
-                            </a>
-                        </div>
                     </div>
                     <div class="view-toggle">
                         <button type="button" class="view-button active" data-view="grid">
@@ -100,7 +95,7 @@
             <section class="events-list">
                 <div class="container">
                     <div class="event-grid">
-                        @foreach ($events as $event)
+                        @forelse ($events as $event)
                             <div class="event-card">
                                 <div class="event-image">
                                     <img src="https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg"
@@ -114,25 +109,16 @@
                                     <div class="event-category tech">Event</div>
                                     <h3 class="event-title">{{ $event->nama_kegiatan }}</h3>
                                     <div class="event-info">
-                                        <p><i class="fas fa-users"></i> Maksimal {{ $event->maksimal_peserta }} peserta</p>
-                                    </div>
-                                    <div class="event-info" style="margin-top: -15px;">
                                         <p><i class="fas fa-pencil-alt"></i> Status : {{ $event->status }}</p>
                                     </div>
-                                    <div class="event-price mt-2 text-sm font-semibold text-gray-700">
-                                        Rp{{ number_format($event->biaya_registrasi, 0, ',', '.') }}
-                                    </div>
-
                                     <div class="event-footer">
-                                        <a href="{{ route('panitia.event.createSesi', ['id_kegiatan' => $event->id_kegiatan]) }}" class="btn btn-sm btn-outline">Buat Sesi</a>
                                         <a href="{{ route('event.detailEvent', ['id' => $event->id_kegiatan]) }}" class="btn btn-sm btn-outline">Details Event</a>
-                                        <a href="#" class="btn btn-sm btn-outline">Hapus Event</a>
                                     </div>
                                 </div>
                             </div>
-                        {{-- @empty
-                            <p>Tidak ada event yang tersedia.</p> --}}
-                        @endforeach
+                        @empty
+                            <p>Tidak ada event yang tersedia.</p>
+                        @endforelse
                     </div>
 
             </section>
