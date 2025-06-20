@@ -17,4 +17,14 @@ class Presensi extends Model
         'waktu_pindai',
         'status',
     ];
+
+    public function registrasi()
+    {
+        return $this->belongsTo(RegistrasiKegiatan::class, 'id_registrasi');
+    }
+
+    public function pemindai()
+    {
+        return $this->belongsTo(User::class, 'dipindai_oleh');
+    }
 }

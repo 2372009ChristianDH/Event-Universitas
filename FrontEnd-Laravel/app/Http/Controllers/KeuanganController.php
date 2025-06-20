@@ -8,7 +8,6 @@ use App\Models\Kegiatan;
 use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
-
 class KeuanganController extends Controller
 {
     public function index()
@@ -25,32 +24,44 @@ class KeuanganController extends Controller
         return view('keuangan.index', compact('pendingRegistrasi', 'pendingVerifications', 'disetujui', 'ditolak', 'activeEvents'));
     }
 
-    public function indexLP()
+    public function indexLP(Request $request)
     {
+        $eventId = $request->query('event');
+
+        // Ambil semua event untuk dropdown
+        $allEvents = Kegiatan::all();
+
+        // Query registrasi, difilter jika ada ID event
         $pendingRegistrasi = RegistrasiKegiatan::with(['user', 'detailKegiatan.kegiatan'])
+            ->when($eventId, function ($query, $eventId) {
+                $query->whereHas('detailKegiatan.kegiatan', function ($q) use ($eventId) {
+                    $q->where('id_kegiatan', $eventId);
+                });
+            })
             ->orderBy('tanggal_registrasi', 'desc')
             ->get();
 
-        return view('keuangan.laporanPembayaran', compact('pendingRegistrasi'));
-    }   
-
+        return view('keuangan.laporanPembayaran', compact('pendingRegistrasi', 'allEvents'));
+    }
 
     public function terima($id)
     {
-        $registrasi = RegistrasiKegiatan::findOrFail($id);
+        $registrasi = RegistrasiKegiatan::with('detailKegiatan.kegiatan')->findOrFail($id);
         $registrasi->status_konfirmasi = 'Disetujui';
 
-        // Data yang ingin dimasukkan ke QR, misal URL absensi scan
-        $url = route('absensi.scan', ['id' => $registrasi->id_registrasi], false);
-        $qrData = 'http://' . request()->getHost() . ':' . request()->getPort() . $url;
+        // Ambil id_kegiatan dari relasi melalui detailKegiatan
+        $eventId = $registrasi->detailKegiatan->id_kegiatan;
 
-        // Nama file QR yang akan disimpan, misal di folder storage/app/public/qr
+        // Siapkan payload QR berupa JSON
+        $qrPayload = json_encode([
+            'id_registrasi' => $registrasi->id_registrasi,
+            'event_id' => $eventId,
+            'session_id' => $registrasi->id_detail_kegiatan
+        ]);
+
         $qrPath = 'qr/qr_' . $registrasi->id_registrasi . '.png';
+        Storage::disk('public')->put($qrPath, QrCode::format('png')->size(300)->generate($qrPayload));
 
-        // Generate QR Code dan simpan file di disk storage/app/public/qr/...
-        Storage::disk('public')->put($qrPath, QrCode::format('png')->size(300)->generate($qrData));
-
-        // Simpan path relatif ke database (tanpa 'public/' prefix)
         $registrasi->kode_qr = $qrPath;
         $registrasi->save();
 

@@ -85,7 +85,8 @@
                                 <h2>Informasi Event</h2>
                                 <div class="schedule-timeline">
                                     @foreach ($detailKegiatan as $sesi)
-                                        <div class="timeline-item">
+                                        <div class="timeline-item"
+                                            style="border: 1px solid #ccc; border-radius: 8px; margin-bottom: 20px; padding: 20px; background-color: #f9f9f9; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                             <div class="timeline-content">
                                                 <h3>Sesi: {{ $sesi->sesi }}</h3>
                                                 <div>
@@ -105,6 +106,16 @@
                                                 </div>
                                                 <div class="event-speaker">
                                                     <i class="fas fa-user"></i> Narasumber : {{ $sesi->narasumber }}
+
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-money-bill-wave"></i> Harga : Rp.
+                                                    {{ number_format($sesi->biaya_registrasi, 0, ',', '.') }}
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-users"></i> Maksimal : {{ $sesi->maksimal_peserta }}
+                                                    peserta
+
                                                 </div>
                                                 <div>
                                                     <i class="fas fa-money-bill-wave"></i> Harga : Rp.
@@ -114,6 +125,27 @@
                                                     <i class="fas fa-users"></i> Maksimal : {{ $sesi->maksimal_peserta }}
                                                     peserta
                                                 </div>
+
+                                                {{-- Tombol edit/hapus untuk panitia --}}
+                                                @if (session('user.id_role') === 2)
+                                                    <div style="margin-top: 15px; display: flex; gap: 10px;">
+                                                        <a href="{{ route('panitia.event.sesi.edit', ['id_sesi' => $sesi->id_detail_kegiatan]) }}"
+                                                            style="background-color: #ffc107; color: #000; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-size: 14px;">
+                                                            <i class="fas fa-edit"></i> Edit
+                                                        </a>
+                                                        <form
+                                                            action="{{ route('panitia.event.sesi.delete', ['id_sesi' => $sesi->id_detail_kegiatan]) }}"
+                                                            method="POST"
+                                                            onsubmit="return confirm('Yakin ingin menghapus sesi ini?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                style="background-color: #dc3545; color: white; padding: 6px 12px; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;">
+                                                                <i class="fas fa-trash-alt"></i> Hapus
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
                                     @endforeach
@@ -154,7 +186,11 @@
                                             <div class="info-item">
                                                 <span class="label">Batas Waktu Pendaftaran</span>
                                                 <span
+
                                                     class="value">{{ \Carbon\Carbon::parse($kegiatan->tanggal_mulai)->format('d M Y') }}</span>
+
+                                                    class="value">{{ \Carbon\Carbon::parse($kegiatan->tanggal_mulai)->subDay()->format('d M Y') }}</span>
+
                                             </div>
                                         </div>
                                         <div class="card-footer">

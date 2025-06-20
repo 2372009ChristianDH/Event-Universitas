@@ -55,6 +55,31 @@
                     <h2>Manajemen Keuangan</h2>
                     <p>Mengelola pembayaran dan catatan keuangan untuk event universitas</p>
                 </div>
+
+
+                <!-- Filter Nama Event -->
+                <div style="margin: 20px 0;">
+                    <form method="GET" action="{{ route('keuangan.laporanPembayaran') }}"
+                        style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                        <label for="eventFilter"
+                            style="font-weight: 600; color: #374151; font-size: 14px; min-width: 120px;">Filter Nama
+                            Event:</label>
+
+                        <select name="event" id="eventFilter" onchange="this.form.submit()"
+                            style="background: white; border: 2px solid #e5e7eb; padding: 12px 16px; border-radius: 10px; color: #374151; font-weight: 500; min-width: 250px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.05);"
+                            onfocus="this.style.borderColor='#4f46e5'; this.style.boxShadow='0 0 0 3px rgba(79, 70, 229, 0.1)'"
+                            onblur="this.style.borderColor='#e5e7eb'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.05)'">
+                            <option value="">🔍 Semua Event</option>
+                            @foreach ($allEvents as $event)
+                                <option value="{{ $event->id_kegiatan }}"
+                                    {{ request('event') == $event->id_kegiatan ? 'selected' : '' }}>
+                                    {{ $event->nama_kegiatan }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
+                </div>
+
                 <div>
                     <div class="section pending-payments">
                         <div class="section-header">
@@ -65,7 +90,12 @@
                                 <thead>
                                     <tr>
                                         <th style="text-align: center">Nama</th>
+
                                         <th style="text-align: center">Nama Event</th>
+
+                                        <th style="text-align: center">Nama Sesi</th>
+                                        <th style="text-align: center">Biaya Registrasi</th>
+
                                         <th style="text-align: center">Tanggal Registrasi</th>
                                         <th style="text-align: center">Bukti Pembayaran</th>
                                         <th style="text-align: center">Status</th>
@@ -78,7 +108,13 @@
                                             <td>
                                                 <div class="user-info"><span>{{ $reg->user->nama }}</span></div>
                                             </td>
+
                                             <td>{{ $reg->detailKegiatan->kegiatan->nama_kegiatan ?? 'N/A' }}</td>
+
+                                            <td>{{ $reg->detailKegiatan->nama_sesi ?? 'N/A' }}</td>
+                                            <td>Rp. {{ number_format($reg->detailKegiatan->biaya_registrasi, 0, ',', '.') }}
+                                            </td>
+
                                             <td>{{ \Carbon\Carbon::parse($reg->tanggal_registrasi)->format('d M Y') }}</td>
                                             <td>
                                                 <a href="{{ asset('storage/' . $reg->bukti_pembayaran) }}" target="_blank"
@@ -88,9 +124,16 @@
                                             </td>
                                             <td>{{ $reg->status_konfirmasi }}</td>
                                             <td>
+
                                                 @if($reg->status_konfirmasi == 'Pending')
                                                     <div class="action-buttons">
                                                         <form action="{{ route('registrasi.terima', $reg->id_registrasi) }}"
+=
+                                                @if ($reg->status_konfirmasi == 'Pending')
+                                                    <div class="action-buttons">
+                                                        <form
+                                                            action="{{ route('registrasi.terima', $reg->id_registrasi) }}"
+
                                                             method="POST" style="display:inline;">
                                                             @csrf
                                                             <button type="submit" class="btn-icon approve" title="Approve">
@@ -116,6 +159,7 @@
                                                                 return true;
                                                             }
                                                         </script>
+
                                                     @endif
                                                 </div>
                                             </td>
@@ -133,5 +177,23 @@
                 </div>
             </div>
         </main>
+
+                                                @endif
+                        </div>
+                        </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center">Tidak ada registrasi pending.</td>
+                        </tr>
+                        @endforelse
+                        </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+    </main>
     </div>
 @endsection

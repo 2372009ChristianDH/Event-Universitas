@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Kegiatan;
 
-
 class DetailKegiatan extends Model
 {
     protected $table = 'detail_kegiatan';
@@ -35,5 +34,10 @@ class DetailKegiatan extends Model
     {
         return $this->hasMany(RegistrasiKegiatan::class, 'id_detail_kegiatan', 'id_detail_kegiatan');
     }
-}
 
+    public function registrasikegiatan()
+    {
+        return $this->hasOne(RegistrasiKegiatan::class, 'id_detail_kegiatan', 'id_detail_kegiatan')
+            ->where('id_user', session('user.id_user'));
+    }
+}

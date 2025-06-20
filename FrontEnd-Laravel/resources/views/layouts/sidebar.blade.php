@@ -9,6 +9,7 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    @stack('styles')
 </head>
 
 <body>
@@ -44,7 +45,7 @@
                 @elseif (session('user.id_role') == 2)
                     <li><a href="/panitia/index"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
                     <li><a href="{{ route('panitia.event.index') }}"><i class="fas fa-plus-circle"></i><span>Buat Event</span></a></li>
-                    <li><a href="/panitia/absensi"><i class="fas fa-qrcode"></i><span>Absensi Scanner</span></a></li>
+                    <li><a href="{{ route('panitia.absen') }}"><i class="fas fa-qrcode"></i><span>Absensi Scanner</span></a></li>
                     <li><a href=""><i class="fas fa-chart-bar"></i><span>Laporan</span></a></li>
                     {{-- Keuangan --}}
                 @elseif (session('user.id_role') == 3)
@@ -54,12 +55,10 @@
                     </li>
                     {{-- peserta --}}
                 @elseif (session('user.id_role') == 4)
-                    <li><a href=""><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+                    <li><a href="{{ route('peserta.index') }}"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
                     <li><a href="{{ route('peserta.event.index') }}"><i class="fas fa-calendar-alt"></i><span>Event</span></a></li>
-                    <li><a href="/peserta/eventSertifikat"><i
-                                class="fas fa-certificate"></i><span>Sertifikat</span></a></li>
+                    <li><a href="/peserta/eventSertifikat"><i class="fas fa-certificate"></i><span>Sertifikat</span></a></li>
                     <li><a href=""><i class="fas fa-credit-card"></i><span>Riwayat Pembayaran</span></a></li>
-                    <li><a href=""><i class="fas fa-user-circle"></i><span>Profile</span></a></li>
                     <li><a href="/peserta/eventQr"><i class="fas fa-qrcode"></i><span>QR Codes</span></a></li>
                 @endif
             </ul>
@@ -88,6 +87,7 @@
             }
         }
     </script>
+    @stack('scripts')
 </body>
 
 </html>

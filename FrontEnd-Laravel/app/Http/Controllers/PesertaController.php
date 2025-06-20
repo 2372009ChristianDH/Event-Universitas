@@ -13,18 +13,20 @@ class PesertaController extends Controller
 {
     public function index()
     {
+        return view('peserta.index');
+    }
+
+    public function indexEvent()
+    {
         $panitiaUserIds = User::whereHas('role', function ($query) {
             $query->where('nama_role', 'panitia');
         })->pluck('id_user');
 
         $events = Kegiatan::whereIn('id_user', $panitiaUserIds)->get();
 
-
-
-        // Tambahkan properti untuk tanggal yang sudah diformat
         foreach ($events as $event) {
-            $start = \Carbon\Carbon::parse($event->tanggal_mulai);
-            $end = \Carbon\Carbon::parse($event->tanggal_selesai);
+            $start = Carbon::parse($event->tanggal_mulai);
+            $end = Carbon::parse($event->tanggal_selesai);
 
             if ($start->isSameDay($end)) {
                 $event->tanggal_display = $start->format('d M');
@@ -34,6 +36,7 @@ class PesertaController extends Controller
                 $event->tanggal_display = $start->format('d M') . ' – ' . $end->format('d M');
             }
         }
+
         return view('peserta.event.index', compact('events'));
     }
 
@@ -44,7 +47,6 @@ class PesertaController extends Controller
 
         return view('peserta.event.create', compact('kegiatan', 'sesiKegiatans'));
     }
-
 
     public function store(Request $request)
     {
@@ -62,28 +64,20 @@ class PesertaController extends Controller
         $filePath = $file->storeAs('bukti_pembayaran', $originalName, 'public');
 
         foreach ($request->id_detail_kegiatan as $idDetail) {
-
-            // Cek kapasitas saat ini
             $jumlahTerdaftar = RegistrasiKegiatan::where('id_detail_kegiatan', $idDetail)->count();
-
             $sesi = DetailKegiatan::find($idDetail);
-            if (!$sesi) {
-                continue; // sesi tidak ditemukan, skip
-            }
+
+            if (!$sesi) continue;
 
             if ($jumlahTerdaftar >= $sesi->maksimal_peserta) {
-                // kapasitas penuh, batalkan pendaftaran sesi ini, bisa kasih flash message atau skip
                 return redirect()->back()->with('error', "Maaf, kapasitas sesi {$sesi->sesi} sudah penuh.");
             }
 
-            // Cek apakah user sudah daftar sesi ini
             $sudahTerdaftar = RegistrasiKegiatan::where('id_user', $userId)
                 ->where('id_detail_kegiatan', $idDetail)
                 ->exists();
 
-            if ($sudahTerdaftar) {
-                continue; // sudah daftar, skip
-            }
+            if ($sudahTerdaftar) continue;
 
             RegistrasiKegiatan::create([
                 'id_user' => $userId,
@@ -96,5 +90,37 @@ class PesertaController extends Controller
         }
 
         return redirect()->route('peserta.event.index')->with('success', 'Berhasil mendaftar kegiatan.');
+    }
+
+    public function myQrCodes(Request $request)
+    {
+        $eventId = $request->query('event');
+        $userId = session('user.id');
+
+        $allEvents = Kegiatan::all();
+
+        $pendingRegistrasi = RegistrasiKegiatan::with(['user', 'detailKegiatan.kegiatan'])
+            ->when($eventId, function ($query, $eventId) {
+                $query->whereHas('detailKegiatan.kegiatan', function ($q) use ($eventId) {
+                    $q->where('id_kegiatan', $eventId);
+                });
+            })
+            ->where('id_user', $userId)
+            ->orderBy('tanggal_registrasi', 'desc')
+            ->get();
+
+        $qrRegistrasi = RegistrasiKegiatan::with(['detailKegiatan.kegiatan'])
+            ->where('status_konfirmasi', 'Disetujui')
+            ->whereNotNull('kode_qr')
+            ->where('id_user', $userId)
+            ->when($eventId, function ($query, $eventId) {
+                $query->whereHas('detailKegiatan.kegiatan', function ($q) use ($eventId) {
+                    $q->where('id_kegiatan', $eventId);
+                });
+            })
+            ->orderBy('tanggal_registrasi', 'desc')
+            ->get();
+
+        return view('peserta.eventQr', compact('qrRegistrasi', 'allEvents', 'pendingRegistrasi'));
     }
 }
