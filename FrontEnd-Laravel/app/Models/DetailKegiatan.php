@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Kegiatan;
 
-
 class DetailKegiatan extends Model
 {
     protected $table = 'detail_kegiatan';
@@ -21,11 +20,24 @@ class DetailKegiatan extends Model
         'waktu_selesai',
         'lokasi',
         'narasumber',
+        'biaya_registrasi',
+        'maksimal_peserta',
+        'status',
     ];
 
     public function kegiatan()
     {
         return $this->belongsTo(Kegiatan::class, 'id_kegiatan');
     }
-}
 
+    public function registrasi()
+    {
+        return $this->hasMany(RegistrasiKegiatan::class, 'id_detail_kegiatan', 'id_detail_kegiatan');
+    }
+
+    public function registrasikegiatan()
+    {
+        return $this->hasOne(RegistrasiKegiatan::class, 'id_detail_kegiatan', 'id_detail_kegiatan')
+            ->where('id_user', session('user.id_user'));
+    }
+}

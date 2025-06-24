@@ -1,6 +1,7 @@
 @extends('layouts.sidebar')
+
 @section('content')
-    <div class="app-container">
+    <div class="dashboard-container">
         <main class="dashboard-main">
             <header class="dashboard-header">
                 <div class="header-container">
@@ -8,124 +9,128 @@
                         <i class="fas fa-bars"></i>
                     </button>
                     <div class="header-title">
-                        <h1>Regristrasi Event</h1>
-                    </div>
-                    <div class="header-actions">
-                        <div class="search-bar">
-                            <input type="text" placeholder="Search...">
-                            <button type="button">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                        <div class="notifications">
-                            <button type="button" class="notification-btn">
-                                <i class="fas fa-bell"></i>
-                                <span class="notification-badge">3</span>
-                            </button>
-                        </div>
+                        <h1>Register Kegiatan</h1>
                     </div>
                 </div>
             </header>
-            <!-- Registration Form -->
-            <section class="form-section" style="margin-top: -100px;">
-                <div class="container">
-                    <div class="form-container">
-                        <div class="form-sidebar">
-                            <div class="form-sidebar-content">
-                                <h2>Annual Tech Conference 2025</h2>
-                                <div class="event-summary">
-                                    <div class="summary-item">
-                                        <i class="fas fa-calendar"></i>
-                                        <div>
-                                            <h4>Date & Time</h4>
-                                            <p>June 15, 2025</p>
-                                            <p>9:00 AM - 5:00 PM</p>
-                                        </div>
-                                    </div>
-                                    <div class="summary-item">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        <div>
-                                            <h4>Location</h4>
-                                            <p>Main Auditorium</p>
-                                            <p>University Campus</p>
-                                        </div>
-                                    </div>
-                                    <div class="summary-item">
-                                        <i class="fas fa-ticket-alt"></i>
-                                        <div>
-                                            <h4>Registration Fee</h4>
-                                            <p>$25.00</p>
-                                        </div>
-                                    </div>
-                                    <div class="summary-item">
-                                        <i class="fas fa-users"></i>
-                                        <div>
-                                            <h4>Available Spots</h4>
-                                            <p>143 of 200</p>
-                                        </div>
-                                    </div>
-                                </div>
+
+            <div class="dashboard-content">
+                <div class="admin-form">
+                    <div class="admin-form-header">
+                        <h2>Daftar Event - <span style="color: blue">{{ $kegiatan->nama_kegiatan }}</span></h2>
+                        <p>Masukkan detail pendaftaran kegiatan</p>
+                    </div>
+
+                    <form method="POST" action="{{ route('peserta.event.store') }}" enctype="multipart/form-data">
+                        @csrf
+
+                        {{-- Menampilkan error validasi --}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
-                        </div>
-                        <div class="form-content">
-                            <h1>Event Registration</h1>
-                            <p class="form-subtitle">Complete the form below to register for the event</p>
-                            
-                            <form class="registration-form">                                
-                                <div class="form-group">
-                                    <label for="student_id">Student ID</label>
-                                    <input type="text" id="student_id" name="student_id" value="STD123456" readonly>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="accessibility">Accessibility Requirements</label>
-                                    <textarea id="accessibility" name="accessibility" placeholder="Please let us know if you have any accessibility requirements"></textarea>
-                                </div>
-                                
-                                <div class="form-group checkbox">
-                                    <input type="checkbox" id="terms" name="terms" required>
-                                    <label for="terms">I agree to the event terms and conditions</label>
-                                </div>
-                                
-                                <div class="payment-section">
-                                    <h3>Payment Details</h3>
-                                    <div class="payment-options">
-                                        <div class="payment-option">
-                                            <input type="radio" id="bank_transfer" name="payment_method" value="bank_transfer" checked>
-                                            <label for="bank_transfer">
-                                                <span class="option-title">Bank Transfer</span>
-                                                <span class="option-desc">Transfer to our university account</span>
+                        @endif
+
+                        <div class="admin-form-section">
+                            <input type="hidden" name="tanggal_registrasi" value="{{ now() }}">
+
+                            <div class="form-group">
+                                <label class="form-label"><strong>Pilih Sesi Kegiatan</strong></label>
+                                <div class="checkbox-list">
+                                    @foreach ($sesiKegiatans as $detail)
+                                        <div class="checkbox-card">
+                                            <label>
+                                                <input type="checkbox" name="id_detail_kegiatan[]"
+                                                    value="{{ $detail->id_detail_kegiatan }}"
+                                                    data-biaya="{{ $detail->biaya_registrasi }}" >
+                                                <div class="checkbox-content">
+                                                    <div class="session-title">Sesi {{ $detail->sesi }}:
+                                                        {{ $detail->nama_sesi }}</div>
+                                                    <div class="session-info">
+                                                        <span>Tanggal:
+                                                            {{ \Carbon\Carbon::parse($detail->tanggal)->format('d M Y') }}</span>
+                                                        |
+                                                        <span>Biaya: Rp
+                                                            {{ number_format($detail->biaya_registrasi, 0, ',', '.') }}</span>
+                                                    </div>
+                                                </div>
                                             </label>
                                         </div>
-                                    </div>
-                                    
-                                    <div class="bank-details">
-                                        <h4>Bank Account Details</h4>
-                                        <p><strong>Bank Name:</strong> University Bank</p>
-                                        <p><strong>Account Name:</strong> University Events</p>
-                                        <p><strong>Account Number:</strong> 1234-5678-9012-3456</p>
-                                        <p><strong>Reference:</strong> TC2025-STD123456</p>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label for="payment_proof">Upload Payment Proof</label>
-                                        <div class="file-upload">
-                                            <i class="fas fa-cloud-upload-alt file-upload-icon"></i>
-                                            <p>Drag and drop your payment proof here or click to browse</p>
-                                            <input type="file" id="payment_proof" name="payment_proof" accept="image/*,.pdf" required>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
-                                
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-block">Complete Registration</button>
-                                </div>
-                            </form>
+                            </div>
+                            <div class="form-group upload-wrapper">
+                                <label class="form-label">Bukti Pembayaran</label>
+                                <label for="bukti_pembayaran" class="upload-label">
+                                    <i class="fas fa-upload upload-icon"></i> Choose File
+                                </label>
+                                <input type="file" id="bukti_pembayaran" name="bukti_pembayaran"
+                                    accept=".jpg,.jpeg,.png,.pdf" required hidden>
+                                <div id="file-name" class="file-name">Belum ada file yang dipilih</div>
+                            </div>
+
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label><strong>Total Biaya:</strong> <span id="total-biaya">Rp. 0</span></label>
+                        </div>
+                        <div class="admin-form-footer">
+                            <a href="{{ route('peserta.event.index') }}" class="btn btn-outline">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Daftar</button>
+                        </div>
+                    </form>
+
                 </div>
-            </section>
-            @include('layouts.footer')
+            </div>
         </main>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('input[name="id_detail_kegiatan[]"]');
+            const totalBiayaElem = document.getElementById('total-biaya');
+
+            function formatRupiah(angka) {
+                return new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR'
+                }).format(angka);
+            }
+
+            function hitungTotal() {
+                let total = 0;
+                checkboxes.forEach(cb => {
+                    if (cb.checked) {
+                        total += parseInt(cb.dataset.biaya) || 0;
+                    }
+                });
+                totalBiayaElem.textContent = formatRupiah(total);
+            }
+
+            // Pasang event listener ke semua checkbox
+            checkboxes.forEach(cb => {
+                cb.addEventListener('change', hitungTotal);
+            });
+
+            // Hitung total saat halaman dimuat (jika ada yang sudah dicentang)
+            hitungTotal();
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('bukti_pembayaran');
+            const fileNameDisplay = document.getElementById('file-name');
+
+            fileInput.addEventListener('change', function() {
+                if (fileInput.files.length > 0) {
+                    fileNameDisplay.textContent = fileInput.files[0].name;
+                } else {
+                    fileNameDisplay.textContent = 'Belum ada file yang dipilih';
+                }
+            });
+        });
+    </script>
 @endsection
