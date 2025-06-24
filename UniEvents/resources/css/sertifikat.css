@@ -1,0 +1,123 @@
+/* Certificate Styles */
+.certificates-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+}
+
+.certificate-card {
+    background-color: white;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.certificate-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.certificate-preview {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.certificate-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.certificate-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.certificate-preview:hover .certificate-overlay {
+    opacity: 1;
+}
+
+.overlay-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.certificate-info {
+    padding: var(--spacing);
+}
+
+.certificate-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.certificate-info p {
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    margin-bottom: var(--spacing-xs);
+    display: flex;
+    align-items: center;
+}
+
+.certificate-info i {
+    width: 1rem;
+    margin-right: var(--spacing-xs);
+    color: var(--primary-color);
+}
+
+.certificate-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--gray-200);
+}
+
+.certificate-id {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+}
+
+.certificate-type {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    background-color: rgba(53, 99, 233, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius-sm);
+}
+
+/* Media Queries */
+@media (max-width: 1200px) {
+    .certificates-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .certificates-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .certificate-preview {
+        height: 150px;
+    }
+    
+    .overlay-actions {
+        flex-direction: column;
+    }
+}

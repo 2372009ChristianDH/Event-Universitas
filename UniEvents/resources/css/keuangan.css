@@ -1,0 +1,306 @@
+/* Finance Specific Styles */
+
+/* Payment Filters */
+.payment-filters {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing);
+    margin-bottom: var(--spacing-lg);
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-group label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: var(--spacing-xs);
+}
+
+.filter-group select {
+    padding: 0.5rem;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--border-radius);
+    background-color: white;
+    color: var(--gray-800);
+    font-size: 0.875rem;
+    transition: var(--transition);
+}
+
+.filter-group select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(53, 99, 233, 0.1);
+}
+
+/* Payment Table */
+.payment-table-container {
+    background-color: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: var(--spacing-lg);
+}
+
+.payment-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.payment-table th {
+    background-color: var(--gray-50);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--gray-700);
+    border-bottom: 2px solid var(--gray-200);
+    white-space: nowrap;
+}
+
+.payment-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--gray-200);
+    vertical-align: middle;
+}
+
+.payment-table tbody tr:hover {
+    background-color: var(--gray-50);
+}
+
+/* Student Info */
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.student-info img {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.student-info h4 {
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+.student-info span {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+}
+
+/* Verifier Info */
+.verifier-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.verifier-info img {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.verifier-info span {
+    font-size: 0.875rem;
+    color: var(--gray-700);
+}
+
+/* Reference ID */
+.reference-id {
+    font-family: 'Courier New', monospace;
+    font-size: 0.875rem;
+    color: var(--gray-700);
+    background-color: var(--gray-100);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius-sm);
+}
+
+/* Bulk Actions */
+.bulk-actions {
+    display: flex;
+    gap: var(--spacing);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Settings Styles */
+.settings-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.settings-section {
+    background-color: white;
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow);
+}
+
+.settings-section h2 {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+/* Profile Settings */
+.profile-settings {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--spacing-lg);
+}
+
+.profile-photo {
+    text-align: center;
+}
+
+.profile-photo img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: var(--spacing);
+}
+
+/* Notification Settings */
+.notification-settings {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing);
+}
+
+.notification-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing);
+    background-color: var(--gray-50);
+    border-radius: var(--border-radius);
+}
+
+.option-info h3 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.option-info p {
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    margin-bottom: 0;
+}
+
+/* Switch Toggle */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--gray-300);
+    transition: var(--transition);
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: var(--transition);
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Checkbox Group */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+/* Settings Actions */
+.settings-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing);
+    margin-top: var(--spacing-lg);
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+    .payment-filters {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .profile-settings {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .profile-photo {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .payment-filters {
+        grid-template-columns: 1fr;
+    }
+    
+    .bulk-actions {
+        flex-direction: column;
+    }
+    
+    .settings-section {
+        padding: var(--spacing);
+    }
+}
+
+@media (max-width: 576px) {
+    .notification-option {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing);
+    }
+    
+    .settings-actions {
+        flex-direction: column;
+    }
+    
+    .settings-actions .btn {
+        width: 100%;
+    }
+}
