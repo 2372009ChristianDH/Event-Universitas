@@ -1,0 +1,145 @@
+/* QR Code Styles */
+.qr-codes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+}
+
+.qr-code-card {
+    background-color: white;
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow);
+}
+
+.qr-code-header {
+    margin-bottom: var(--spacing);
+}
+
+.qr-code-header h3 {
+    margin-bottom: var(--spacing-xs);
+}
+
+.event-date {
+    color: var(--gray-600);
+    font-size: 0.875rem;
+}
+
+.qr-code-content {
+    display: flex;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.qr-code-image {
+    flex: 0 0 200px;
+}
+
+.qr-placeholder {
+    width: 200px;
+    height: 200px;
+    background-color: var(--gray-100);
+    border: 2px dashed var(--gray-300);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qr-placeholder i {
+    font-size: 4rem;
+    color: var(--gray-400);
+}
+
+.qr-code-info {
+    flex: 1;
+}
+
+.qr-code-info p {
+    margin-bottom: var(--spacing-sm);
+    font-size: 0.875rem;
+}
+
+.qr-code-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.qr-instructions {
+    padding: var(--spacing-lg);
+}
+
+.instruction-card {
+    background-color: var(--gray-50);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: flex-start;
+}
+
+.instruction-icon {
+    width: 3rem;
+    height: 3rem;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.instruction-content h3 {
+    margin-bottom: var(--spacing);
+}
+
+.instruction-content ol {
+    padding-left: var(--spacing-lg);
+}
+
+.instruction-content li {
+    margin-bottom: var(--spacing-sm);
+    color: var(--gray-700);
+}
+
+/* Media Queries */
+@media (max-width: 992px) {
+    .qr-codes-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .qr-code-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .qr-code-info {
+        margin-top: var(--spacing);
+    }
+    
+    .qr-code-actions {
+        justify-content: center;
+    }
+    
+    .instruction-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .qr-code-actions {
+        flex-direction: column;
+    }
+    
+    .qr-code-actions .btn {
+        width: 100%;
+    }
+}
